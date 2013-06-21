@@ -37,11 +37,15 @@ namespace BitcoinWrapper.Wrapper
 
         public JObject RequestServer(MethodName methodName)
         {
-            return RequestServer(methodName, null);
+            return RequestServer(methodName, parameters:null);
         }
 
+        public JObject RequestServer(MethodName methodName, object parameter)
+        {
+            return RequestServer(methodName, new List<object>() {parameter});
+        }
 
-        public JObject RequestServer(MethodName methodName, List<string> parameters)
+        public JObject RequestServer(MethodName methodName, List<object> parameters)
         {
             var rawRequest = GetRawRequest();
 

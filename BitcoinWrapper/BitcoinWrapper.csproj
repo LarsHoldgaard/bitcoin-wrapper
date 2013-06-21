@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="Data\Block.cs" />
     <Compile Include="Data\MethodName.cs" />
     <Compile Include="Data\Transaction.cs" />

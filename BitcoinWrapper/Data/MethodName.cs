@@ -10,7 +10,14 @@ namespace BitcoinWrapper.Data
     {
         getbalance,
         getblock,
-        getRawTransaction,
-        DecodeRawTransaction
+        getrawtransaction,
+        decoderawtransaction,
+        getaccount,
+        getblockcount,
+        getblockhash,
+        getdifficulty,
+        getgenerate,
+        gethashespersec,
+        getinfo
     }
 }
