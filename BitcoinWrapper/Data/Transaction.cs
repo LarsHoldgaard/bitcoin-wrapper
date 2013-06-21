@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BitcoinWrapper.Data
 {
-    class Transaction
+    public class Transaction
     {
+        public string HashId { get; set; }
+        public decimal Amount { get; set; }
+
+        public Transaction()
+        {
+            
+        }
     }
 }

@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BitcoinWrapper.Data
 {
-    class Block
+    public class Block
     {
+        public string Hash { get; set; }
+        public List<Transaction> Transactions { get; set; }
+
+        public Block()
+        {
+            this.Transactions = new List<Transaction>();
+        }
     }
 }
