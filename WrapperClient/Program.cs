@@ -11,9 +11,22 @@ namespace WrapperClient
     {
         static void Main(string[] args)
         {
-            BaseBtcConnector btc = new BaseBtcConnector();
+            BtcConnector btc = new BtcConnector();
+            btc.GetBalance();
             
-            Console.WriteLine();
+            // NEED TO TEST:
+            // sendtransaction (requires unlock)
+        //    addnode,
+        //getaddednodeinfo,
+        //gettxout,
+        //gettxoutsetinfo,
+        //keypoolrefill,
+        //sendfrom,
+        //signmessage,
+        //submitblock,
+        //verifymessage,
+        //walletpassphrase,
+        //walletpassphrasechange
 
             Console.ReadKey();
         }

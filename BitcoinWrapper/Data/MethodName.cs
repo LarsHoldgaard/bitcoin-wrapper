@@ -59,7 +59,6 @@ namespace BitcoinWrapper.Data
         submitblock,
         verifymessage,
         walletpassphrase,
-        walletpassphrasechange,
-        move
+        walletpassphrasechange
     }
 }
