@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BitcoinWrapper.Common;
 using BitcoinWrapper.Data;
 using Newtonsoft.Json;
 
@@ -20,11 +21,11 @@ namespace BitcoinWrapper.Wrapper
             this.BaseConnector = new BaseConnector();
         }
 
-        public decimal GetBalance()
+        public float GetBalance()
         {
             var result = BaseConnector.RequestServer(MethodName.getbalance)["result"].ToString();
-            decimal balance = 0.0m;
-            decimal.TryParse(result, out balance);
+            float balance = 0.0f;
+            float.TryParse(result, out balance);
             return balance;
         }
 
@@ -65,11 +66,11 @@ namespace BitcoinWrapper.Wrapper
             var rawTransaction = BaseConnector.RequestServer(MethodName.getblockhash,index)["result"].ToString();
             return rawTransaction;
         }
-        public decimal GetDifficulty()
+        public float GetDifficulty()
         {
             var result = BaseConnector.RequestServer(MethodName.getdifficulty)["result"].ToString();
-            decimal balance = 0;
-            decimal.TryParse(result, out balance);
+            float balance = 0;
+            float.TryParse(result, out balance);
             return balance;
         }
         public string GetGenerate()
@@ -164,9 +165,14 @@ namespace BitcoinWrapper.Wrapper
             return rawTransaction;
         }
 
-        public Transaction GetTransaction(string txid)
+        /// <summary>
+        /// Only for in-wallet transactions. To find "all transactions", use GetRawTransaction and decude with DecodeRawTransaction
+        /// </summary>
+        /// <param name="txid"></param>
+        /// <returns></returns>
+        public InwalletTransaction GetTransaction(string txid)
         {
-            Transaction transaction = BaseConnector.RequestServer(MethodName.gettransaction, txid)["result"].ToObject<Transaction>();
+            InwalletTransaction transaction = BaseConnector.RequestServer(MethodName.gettransaction, txid)["result"].ToObject<InwalletTransaction>();
             return transaction;
         }
 
@@ -206,9 +212,9 @@ namespace BitcoinWrapper.Wrapper
             return rawTransaction;
         }
 
-        public string ListInCeBlock()
+        public string ListSinceBlock()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listinceblock)["result"].ToString();
+            var rawTransaction = BaseConnector.RequestServer(MethodName.listsinceblock)["result"].ToString();
             return rawTransaction;
         }
 
@@ -224,7 +230,7 @@ namespace BitcoinWrapper.Wrapper
             return rawTransaction;
         }
 
-        public string SetTxFee(decimal amount)
+        public string SetTxFee(float amount)
         {
             var rawTransaction = BaseConnector.RequestServer(MethodName.settxfee,amount)["result"].ToString();
             return rawTransaction;
@@ -234,6 +240,97 @@ namespace BitcoinWrapper.Wrapper
             var rawTransaction = BaseConnector.RequestServer(MethodName.walletlock)["result"].ToString();
             return rawTransaction;
         }
+        public string ValidateAddress(string bitcoinAddress)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.validateaddress,bitcoinAddress)["result"].ToString();
+            return rawTransaction;
+        }
+        public string Stop()
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.stop)["result"].ToString();
+            return rawTransaction;
+        }
+        public string SetGenerate(bool variable)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.setgenerate,variable)["result"].ToString();
+            return rawTransaction;
+        }
+        
+        /// <summary>
+        /// not tested
+        /// </summary>
+        /// <param name="bitcoinAddress"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public string SendToAddress(string bitcoinAddress, float amount)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.sendtoaddress, new List<object>() { amount, bitcoinAddress })["result"].ToString();
+            return rawTransaction;
+        }
+        public string SendRawTransaction(string rawTrans)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.sendrawtransaction, rawTrans)["result"].ToString();
+            return rawTransaction;
+        }
+        public string AddNode(string node, NodeAction action)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.addnode, new List<object>() { node, action.ToString() })["result"].ToString();
+            return rawTransaction;
+        }
+        public string GetAddedNodeInfo(string dns)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.getaddednodeinfo, dns)["result"].ToString();
+            return rawTransaction;
+        }
+        public string GetTxOut(string txId, int n)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.gettxout, new List<object>() { txId,n})["result"].ToString();
+            return rawTransaction;
+        }
+        public string GetTxOutSetInfo()
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.gettxoutsetinfo)["result"].ToString();
+            return rawTransaction;
+        }
+        public string KeyPoolRefill()
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.keypoolrefill)["result"].ToString();
+            return rawTransaction;
+        }
+        public string SendFrom(string fromAccount, string toBitcoinAddress, decimal amount)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.sendfrom, new List<object>() { fromAccount,toBitcoinAddress,amount})["result"].ToString();
+            return rawTransaction;
+        }
+        public string SignMessage(string bitcoinAddress, string message)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.signmessage, new List<object>() { bitcoinAddress,message})["result"].ToString();
+            return rawTransaction;
+        }
+        public string SubmitBlock(string hexData)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.submitblock, hexData)["result"].ToString();
+            return rawTransaction;
+        }
+        public string VerifyMessage(string bitcoinAddress, string signature, string message)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.verifymessage, new List<object>() { bitcoinAddress,signature,message})["result"].ToString();
+            return rawTransaction;
+        }
+        public string WalletPassphrase(string passphrase, int timeout)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.walletpassphrase, new List<object>() { passphrase,timeout})["result"].ToString();
+            return rawTransaction;
+        }
+        public string WalletPassphraseChange(string oldpassphrase, string newpassphrase)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.walletpassphrasechange, new List<object>() { oldpassphrase, newpassphrase})["result"].ToString();
+            return rawTransaction;
+        }
+
+
+
+
 
 
     }

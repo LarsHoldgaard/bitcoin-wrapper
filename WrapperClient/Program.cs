@@ -12,29 +12,21 @@ namespace WrapperClient
         static void Main(string[] args)
         {
             BtcConnector btc = new BtcConnector();
-
-            Console.WriteLine(btc.DumpPrivKey("1BP4T1MQZffcF6v78swNnUYHyfLYBs1oWU"));
-
+            btc.GetBalance();
+            
             // NEED TO TEST:
-            //getaccountaddress,
-            //getaddressesbyaccount,
-            //getblocktemplate,
-            //getconnectioncount,
-            //getnewaddress,
-            //getreceivedbyaccount,
-            //getreceivedbyaddress,
-            //gettransaction,
-            //getwork,
-            //help,
-            //listaccounts,
-            //listaddressgroupings,
-            //listreceivedbyaccount,
-            //listreceivedbyaddress,
-            //listinceblock,
-            //listtransactions,
-            //listlockunspent,
-            //settxfee,
-            //walletlock
+            // sendtransaction (requires unlock)
+        //    addnode,
+        //getaddednodeinfo,
+        //gettxout,
+        //gettxoutsetinfo,
+        //keypoolrefill,
+        //sendfrom,
+        //signmessage,
+        //submitblock,
+        //verifymessage,
+        //walletpassphrase,
+        //walletpassphrasechange
 
             Console.ReadKey();
         }

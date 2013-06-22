@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\NodeAction.cs" />
     <Compile Include="Data\Block.cs" />
+    <Compile Include="Data\InwalletTransaction.cs" />
     <Compile Include="Data\MethodName.cs" />
     <Compile Include="Data\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

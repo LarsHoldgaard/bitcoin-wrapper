@@ -14,7 +14,7 @@ namespace BitcoinWrapper.Data
         public int Height { get; set; }
         public int Version { get; set; }
         public string MerkleRoot { get; set; }
-        public decimal Difficulty { get; set; }
+        public float Difficulty { get; set; }
         public string PreviousBlockHash { get; set; }
         public string NextBlockHash { get; set; }
         public string Bits { get; set; }

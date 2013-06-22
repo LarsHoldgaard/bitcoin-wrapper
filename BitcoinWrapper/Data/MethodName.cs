@@ -39,10 +39,26 @@ namespace BitcoinWrapper.Data
         listaddressgroupings,
         listreceivedbyaccount,
         listreceivedbyaddress,
-        listinceblock,
+        listsinceblock,
         listtransactions,
         listlockunspent,
         settxfee,
-        walletlock
+        walletlock,
+        validateaddress,
+        stop,
+        setgenerate,
+        sendtoaddress,
+        sendrawtransaction,
+        addnode,
+        getaddednodeinfo,
+        gettxout,
+        gettxoutsetinfo,
+        keypoolrefill,
+        sendfrom,
+        signmessage,
+        submitblock,
+        verifymessage,
+        walletpassphrase,
+        walletpassphrasechange
     }
 }

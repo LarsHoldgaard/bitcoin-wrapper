@@ -24,7 +24,7 @@ namespace BitcoinWrapper.Data
 
     public class vout
     {
-        public decimal value { get; set; }
+        public float value { get; set; }
         public int n { get; set; }
         public scriptPubKey ScriptPubKey { get; set; }
     }
