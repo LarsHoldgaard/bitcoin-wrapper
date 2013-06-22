@@ -1,0 +1,26 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>title</h2>
+
+
+Balance:<br/>
+<label id="balanceLbl"></label>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetBalanceInWallet",
+            success: function(data) {
+                $('#balanceLbl').text(data);
+            }
+        });
+    });
+    
+
+</script>
