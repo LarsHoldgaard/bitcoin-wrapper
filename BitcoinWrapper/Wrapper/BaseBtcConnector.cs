@@ -9,14 +9,18 @@ using Newtonsoft.Json;
 
 namespace BitcoinWrapper.Wrapper
 {
-    public class BtcConnector
+    /// <summary>
+    /// This connector implements all the original methods in the Bitcoin-qt API
+    /// See more here: https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_Calls_list
+    /// </summary>
+    public class BaseBtcConnector
     {
         public BaseConnector BaseConnector { get; set; }
 
         /// <summary>
         /// Starts connecting to the Bitcoin-qt server
         /// </summary>
-        public BtcConnector()
+        public BaseBtcConnector()
         {
             this.BaseConnector = new BaseConnector();
         }
@@ -264,7 +268,7 @@ namespace BitcoinWrapper.Wrapper
         /// <returns></returns>
         public string SendToAddress(string bitcoinAddress, float amount)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.sendtoaddress, new List<object>() { amount, bitcoinAddress })["result"].ToString();
+            var rawTransaction = BaseConnector.RequestServer(MethodName.sendtoaddress, new List<object>() {bitcoinAddress, amount })["result"].ToString();
             return rawTransaction;
         }
         public string SendRawTransaction(string rawTrans)
@@ -317,6 +321,13 @@ namespace BitcoinWrapper.Wrapper
             var rawTransaction = BaseConnector.RequestServer(MethodName.verifymessage, new List<object>() { bitcoinAddress,signature,message})["result"].ToString();
             return rawTransaction;
         }
+
+        /// <summary>
+        /// This opens the Bitcoin wallet to access methods which requires an open wallet
+        /// </summary>
+        /// <param name="passphrase">Password you've encrypted the wallet with</param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         public string WalletPassphrase(string passphrase, int timeout)
         {
             var rawTransaction = BaseConnector.RequestServer(MethodName.walletpassphrase, new List<object>() { passphrase,timeout})["result"].ToString();
@@ -327,11 +338,10 @@ namespace BitcoinWrapper.Wrapper
             var rawTransaction = BaseConnector.RequestServer(MethodName.walletpassphrasechange, new List<object>() { oldpassphrase, newpassphrase})["result"].ToString();
             return rawTransaction;
         }
-
-
-
-
-
-
+        public string Move(string fromAccount, string toAccount, float amount)
+        {
+            var rawTransaction = BaseConnector.RequestServer(MethodName.move, new List<object>() {fromAccount , toAccount, amount})["result"].ToString();
+            return rawTransaction;
+        }
     }
 }
