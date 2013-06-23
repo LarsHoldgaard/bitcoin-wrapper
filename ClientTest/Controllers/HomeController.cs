@@ -10,12 +10,15 @@ namespace ClientTest.Controllers
     public class HomeController : Controller
     {
         private BaseBtcConnector _baseBtcConnector;
+        private BitcoinService _bitcoinService;
+
         //
         // GET: /Home/
 
         public HomeController()
         {
-            this._baseBtcConnector =  new BaseBtcConnector();;
+            this._baseBtcConnector =  new BaseBtcConnector();
+            this._bitcoinService = new BitcoinService();
         }
 
         public ActionResult Index()
@@ -26,8 +29,22 @@ namespace ClientTest.Controllers
         [HttpGet]
         public float GetBalanceInWallet()
         {
-            var service = _baseBtcConnector.GetBalance();
-            return service;
+            var balance = _baseBtcConnector.GetBalance();
+            return balance;
+        }
+
+        [HttpGet]
+        public JsonResult GetInformationAboutTransaction(string txid)
+        {
+            var transaction = _bitcoinService.GetTransaction(txid);
+            return Json(transaction, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetBlockInfo(string blockhashId)
+        {
+            var transaction = _baseBtcConnector.GetBlock(blockhashId);
+            return Json(transaction, JsonRequestBehavior.AllowGet);
         }
     }
 }

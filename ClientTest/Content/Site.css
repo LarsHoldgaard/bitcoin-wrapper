@@ -59,3 +59,24 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+ 
+
+/* Custom 
+    */
+
+.stepBackground {
+    background: #e9e9e9;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    padding: 15px;
+}
+
+h2 {
+    font-size: 14pt;
+}
+
+.bitFunction {
+    border-radius: 8px;
+    border: 1px solid gray;
+    margin: 15px;
+}

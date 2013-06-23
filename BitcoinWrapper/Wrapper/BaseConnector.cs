@@ -37,12 +37,12 @@ namespace BitcoinWrapper.Wrapper
 
         public JObject RequestServer(MethodName methodName)
         {
-            return RequestServer(methodName, parameters:null);
+            return RequestServer(methodName, parameters: null);
         }
 
         public JObject RequestServer(MethodName methodName, object parameter)
         {
-            return RequestServer(methodName, new List<object>() {parameter});
+            return RequestServer(methodName, new List<object>() { parameter });
         }
 
         public JObject RequestServer(MethodName methodName, List<object> parameters)
@@ -60,27 +60,29 @@ namespace BitcoinWrapper.Wrapper
             JArray props = new JArray();
             if (parameters != null && parameters.Any())
             {
-                
+
                 foreach (var parameter in parameters)
                 {
                     props.Add(parameter);
                 }
 
-    
-            }
-            joe.Add(new JProperty("params", props));            
-            
-            // serialize json for the request
-            string s = JsonConvert.SerializeObject(joe);
-            byte[] byteArray = Encoding.UTF8.GetBytes(s);
-            rawRequest.ContentLength = byteArray.Length;
-            Stream dataStream = rawRequest.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
 
+            }
             StreamReader streamReader = null;
+            joe.Add(new JProperty("params", props));
+
+            // serialize json for the request
+
             try
             {
+                string s = JsonConvert.SerializeObject(joe);
+                byte[] byteArray = Encoding.UTF8.GetBytes(s);
+                rawRequest.ContentLength = byteArray.Length;
+                Stream dataStream = rawRequest.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+
                 WebResponse webResponse = rawRequest.GetResponse();
 
                 streamReader = new StreamReader(webResponse.GetResponseStream(), true);
