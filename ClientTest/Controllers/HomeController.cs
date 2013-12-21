@@ -1,47 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using BitcoinWrapper.Data;
 using BitcoinWrapper.Wrapper;
 
 namespace ClientTest.Controllers
 {
     public class HomeController : Controller
     {
-        private BaseBtcConnector _baseBtcConnector;
-        private BitcoinService _bitcoinService;
+        private readonly BaseBtcConnector _baseBtcConnector;
+        private readonly BitcoinService _bitcoinService;
 
         //
         // GET: /Home/
-
         public HomeController()
         {
-            this._baseBtcConnector =  new BaseBtcConnector();
-            this._bitcoinService = new BitcoinService();
+            _baseBtcConnector =  new BaseBtcConnector();
+            _bitcoinService = new BitcoinService();
         }
 
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         [HttpGet]
-        public float GetBalanceInWallet()
+        public Decimal GetBalanceInWallet()
         {
-            var balance = _baseBtcConnector.GetBalance();
-            return balance;
+            return _baseBtcConnector.GetBalance();
         }
 
         [HttpGet]
-        public JsonResult GetInformationAboutTransaction(string txid)
+        public JsonResult GetInformationAboutTransaction(String txId)
         {
-            var transaction = _bitcoinService.GetTransaction(txid);
+            Transaction transaction = _bitcoinService.GetTransaction(txId);
             return Json(transaction, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetBlockInfo(string blockhashId)
+        public JsonResult GetBlockInfo(String blockhashId)
         {
             var transaction = _baseBtcConnector.GetBlock(blockhashId);
             return Json(transaction, JsonRequestBehavior.AllowGet);

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BitcoinWrapper.Data;
 
 namespace BitcoinWrapper.Wrapper
@@ -12,19 +8,17 @@ namespace BitcoinWrapper.Wrapper
     /// </summary>
     public class BitcoinService
     {
-        private BaseBtcConnector _baseBtcConnector;
+        private readonly BaseBtcConnector _baseBtcConnector;
 
         public BitcoinService()
         {
-            this._baseBtcConnector = new BaseBtcConnector();    
+            _baseBtcConnector = new BaseBtcConnector();    
         }
 
-        public Transaction GetTransaction(string txid)
+        public Transaction GetTransaction(String txId)
         {
-            var rawTransaction = _baseBtcConnector.GetRawTransaction(txid);
-            var infoAboutTransaction = _baseBtcConnector.DecodeRawTransaction(rawTransaction);
-            return infoAboutTransaction;
+            String rawTransaction = _baseBtcConnector.GetRawTransaction(txId);
+            return _baseBtcConnector.DecodeRawTransaction(rawTransaction);
         }
-
     }
 }
