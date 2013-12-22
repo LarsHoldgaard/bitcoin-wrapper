@@ -4,7 +4,7 @@ using System.Globalization;
 using BitcoinWrapper.Wrapper;
 using BitcoinWrapper.Wrapper.Interfaces;
 
-namespace WrapperClient
+namespace ConsoleClient
 {
     internal sealed class Program
     {

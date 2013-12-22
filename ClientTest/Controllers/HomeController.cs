@@ -4,7 +4,7 @@ using BitcoinWrapper.Data;
 using BitcoinWrapper.Wrapper;
 using BitcoinWrapper.Wrapper.Interfaces;
 
-namespace ClientTest.Controllers
+namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
@@ -40,7 +40,7 @@ namespace ClientTest.Controllers
         [HttpGet]
         public JsonResult GetBlockInfo(String blockhashId)
         {
-            var transaction = _baseBtcConnector.GetBlock(blockhashId);
+            Block transaction = _baseBtcConnector.GetBlock(blockhashId);
             return Json(transaction, JsonRequestBehavior.AllowGet);
         }
     }

@@ -24,7 +24,7 @@ namespace BitcoinWrapper.Wrapper
         
         public Decimal GetBalance()
         {
-            var result = _baseConnector.RequestServer(MethodName.getbalance)["result"].ToString();
+            String result = _baseConnector.RequestServer(MethodName.getbalance)["result"].ToString();
             Decimal balance;
             Decimal.TryParse(result, out balance);
             return balance;
