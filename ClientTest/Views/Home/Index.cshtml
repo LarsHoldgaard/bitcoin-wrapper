@@ -152,8 +152,9 @@
                     contentType: "application/json; charset=utf-8",
                     data: { txid: txId },
                     url: "/Home/GetInformationAboutTransaction",
-                    success: function (data) {
-                        $('#infoAboutTransactionLbl').addClass('text-success').text('Amount transfered: ' + data.vout[0].value);
+                    success: function (data)
+                    {
+                        $('#infoAboutTransactionLbl').addClass('text-success').text('Amount transfered: ' + data.Vout[0].Value);
                     }
                 });
             } else {
