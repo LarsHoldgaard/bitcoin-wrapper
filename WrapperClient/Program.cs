@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
+using System.Globalization;
 using BitcoinWrapper.Wrapper;
 
 namespace WrapperClient
 {
-    class Program
+    internal sealed class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            BaseBtcConnector btc = new BaseBtcConnector();
-            
-            Console.WriteLine();
-
-            Console.ReadKey();
+            BaseBtcConnector baseBtcConnector = new BaseBtcConnector();
+            Console.Write("Connecting to bitcoin daemon: " + ConfigurationManager.AppSettings["ServerIp"] + "...");
+            Double networkDifficulty = baseBtcConnector.GetDifficulty();
+            Console.WriteLine("OK\n\nBTC Network Difficulty: " + networkDifficulty.ToString("#,#", CultureInfo.InvariantCulture));
+            Decimal myBalance = baseBtcConnector.GetBalance();
+            Console.WriteLine("My balance: " + myBalance + " BTC");
+            Console.ReadLine();
         }
     }
 }

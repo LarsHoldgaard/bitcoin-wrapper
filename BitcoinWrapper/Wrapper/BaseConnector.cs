@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using BitcoinWrapper.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,24 +13,25 @@ namespace BitcoinWrapper.Wrapper
 {
     public class BaseConnector
     {
-        private string serverIp = ConfigurationManager.AppSettings.Get("serverip");
-        private string username = ConfigurationManager.AppSettings.Get("username");
-        private string password = ConfigurationManager.AppSettings.Get("password");
-
-
+        private readonly String _serverIp = ConfigurationManager.AppSettings.Get("ServerIp");
+        private readonly String _username = ConfigurationManager.AppSettings.Get("Username");
+        private readonly String _password = ConfigurationManager.AppSettings.Get("Password");
+        
         public BaseConnector()
         {
-            if (string.IsNullOrEmpty(serverIp))
+            if (String.IsNullOrWhiteSpace(_serverIp))
             {
-                throw new ArgumentException("You have to add a server IP setting with key: serverip");
+                throw new ArgumentException("You have to add a server IP setting with key: ServerIp");
             }
-            if (string.IsNullOrEmpty(username))
+
+            if (String.IsNullOrWhiteSpace(_username))
             {
-                throw new ArgumentException("You have to add a bitcoin qt username setting with key: username");
+                throw new ArgumentException("You have to add a bitcoin qt username setting with key: Username");
             }
-            if (string.IsNullOrEmpty(password))
+
+            if (String.IsNullOrWhiteSpace(_password))
             {
-                throw new ArgumentException("You have to add a bitcoin qt password setting with key: password");
+                throw new ArgumentException("You have to add a bitcoin qt password setting with key: Password");
             }
         }
 
@@ -42,52 +42,56 @@ namespace BitcoinWrapper.Wrapper
 
         public JObject RequestServer(MethodName methodName, object parameter)
         {
-            return RequestServer(methodName, new List<object>() { parameter });
+            return RequestServer(methodName, new List<object> { parameter });
         }
 
         public JObject RequestServer(MethodName methodName, List<object> parameters)
         {
-            var rawRequest = GetRawRequest();
+            HttpWebRequest rawRequest = GetRawRequest();
 
-            // basic required info to qt
-            JObject joe = new JObject();
-            joe.Add(new JProperty("jsonrpc", "1.0"));
-            joe.Add(new JProperty("id", "1"));
-            joe.Add(new JProperty("method", methodName.ToString()));
+            //  basic info required by qt
+            JObject jObject = new JObject
+                {
+                    new JProperty("jsonrpc", "1.0"),
+                    new JProperty("id", "1"),
+                    new JProperty("method", methodName.ToString())
+                };
 
-            // adds provided paramters
-
+            //  adds provided parameters
             JArray props = new JArray();
+
             if (parameters != null && parameters.Any())
             {
-
-                foreach (var parameter in parameters)
+                foreach (object parameter in parameters)
                 {
                     props.Add(parameter);
                 }
-
-
             }
+
             StreamReader streamReader = null;
-            joe.Add(new JProperty("params", props));
+            jObject.Add(new JProperty("params", props));
 
             // serialize json for the request
-
             try
             {
-                string s = JsonConvert.SerializeObject(joe);
+                String s = JsonConvert.SerializeObject(jObject);
                 byte[] byteArray = Encoding.UTF8.GetBytes(s);
                 rawRequest.ContentLength = byteArray.Length;
                 Stream dataStream = rawRequest.GetRequestStream();
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 dataStream.Close();
-
-
+                
                 WebResponse webResponse = rawRequest.GetResponse();
-
                 streamReader = new StreamReader(webResponse.GetResponseStream(), true);
-
                 return (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd());
+            }
+            catch (WebException webException)
+            {
+                if (webException.Status == WebExceptionStatus.ConnectFailure)
+                {
+                    throw new Exception("Could not connect to bitcoind, please check that bitcoind is up and running and that you configuration (" + _serverIp + ", " + _username + ", " + _password +") is correct");
+                }
+                return null;
             }
             finally
             {
@@ -95,19 +99,15 @@ namespace BitcoinWrapper.Wrapper
                 {
                     streamReader.Close();
                 }
-
             }
-            return null;
         }
 
         private HttpWebRequest GetRawRequest()
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(serverIp);
-            webRequest.Credentials = new NetworkCredential(username, password);
-
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(_serverIp);
+            webRequest.Credentials = new NetworkCredential(_username, _password);
             webRequest.ContentType = "application/json-rpc";
             webRequest.Method = "POST";
-
             return webRequest;
         }
     }

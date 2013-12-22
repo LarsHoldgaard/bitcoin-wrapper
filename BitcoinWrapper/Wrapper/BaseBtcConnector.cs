@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BitcoinWrapper.Common;
 using BitcoinWrapper.Data;
-using Newtonsoft.Json;
 
 namespace BitcoinWrapper.Wrapper
 {
@@ -22,151 +18,142 @@ namespace BitcoinWrapper.Wrapper
         /// </summary>
         public BaseBtcConnector()
         {
-            this.BaseConnector = new BaseConnector();
+            BaseConnector = new BaseConnector();
         }
 
-        public float GetBalance()
+        public Decimal GetBalance()
         {
             var result = BaseConnector.RequestServer(MethodName.getbalance)["result"].ToString();
-            float balance = 0.0f;
-            float.TryParse(result, out balance);
+            Decimal balance;
+            Decimal.TryParse(result, out balance);
             return balance;
         }
 
-        public Block GetBlock(string hash)
+        public Block GetBlock(String hash)
         {
-            Block block = BaseConnector.RequestServer(MethodName.getblock,hash)["result"].ToObject<Block>();
-            return block;
+            return BaseConnector.RequestServer(MethodName.getblock, hash)["result"].ToObject<Block>();
         }
 
-        public string GetRawTransaction(string txid)
+        public String GetRawTransaction(String txId)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getrawtransaction,txid)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getrawtransaction, txId)["result"].ToString();
         }
 
-        public Transaction DecodeRawTransaction(string rawTransaction)
+        public Transaction DecodeRawTransaction(String rawTransaction)
         {
-            Transaction transaction = BaseConnector.RequestServer(MethodName.decoderawtransaction, rawTransaction)["result"].ToObject<Transaction>();
-            return transaction;
+            return BaseConnector.RequestServer(MethodName.decoderawtransaction, rawTransaction)["result"].ToObject<Transaction>();
+        }
+        
+        public String GetAccount(String bitcoinAddress)
+        {
+            return BaseConnector.RequestServer(MethodName.getaccount, bitcoinAddress)["result"].ToString();
         }
 
-
-        public string GetAccount(string bitcoinAddress)
+        public Int32 GetBlockCount()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getaccount, bitcoinAddress)["result"].ToString();
-            return rawTransaction;
-        }
-
-        public int GetBlockCount()
-        {
-            var result = BaseConnector.RequestServer(MethodName.getblockcount)["result"].ToString();
-            int balance = 0;
-            int.TryParse(result, out balance);
+            String result = BaseConnector.RequestServer(MethodName.getblockcount)["result"].ToString();
+            Int32 balance;
+            Int32.TryParse(result, out balance);
             return balance;
         }
-        public string GetBlockhash(int index)
+
+        public String GetBlockhash(Int32 index)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getblockhash,index)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getblockhash, index)["result"].ToString();
         }
-        public float GetDifficulty()
+
+        public Double GetDifficulty()
         {
-            var result = BaseConnector.RequestServer(MethodName.getdifficulty)["result"].ToString();
-            float balance = 0;
-            float.TryParse(result, out balance);
+            String result = BaseConnector.RequestServer(MethodName.getdifficulty)["result"].ToString();
+            Double balance;
+            Double.TryParse(result, out balance);
             return balance;
         }
-        public string GetGenerate()
+
+        public String GetGenerate()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getgenerate)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getgenerate)["result"].ToString();
         }
 
-        public int GetHashesPerSec()
+        public Int32 GetHashesPerSec()
         {
-            var result = BaseConnector.RequestServer(MethodName.gethashespersec)["result"].ToString();
-            int balance = 0;
-            int.TryParse(result, out balance);
+            String result = BaseConnector.RequestServer(MethodName.gethashespersec)["result"].ToString();
+            Int32 balance;
+            Int32.TryParse(result, out balance);
             return balance;
         }
-        public string GetInfo()
+
+        public String GetInfo()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getinfo)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getinfo)["result"].ToString();
         }
 
-        public string GetMiningInfo()
+        public String GetMiningInfo()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getmininginfo)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getmininginfo)["result"].ToString();
         }
 
-        public string GetPeerInfo()
+        public String GetPeerInfo()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getpeerinfo)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getpeerinfo)["result"].ToString();
         }
 
-        public string GetRawMemPool()
+        public String GetRawMemPool()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getrawmempool)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getrawmempool)["result"].ToString();
         }
 
-        public string BackupWallet(string destination)
+        public String BackupWallet(String destination)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.backupwallet,destination)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.backupwallet, destination)["result"].ToString();
         }
 
-        public string DumpPrivKey(string bitcoinAddress)
+        public String DumpPrivKey(String bitcoinAddress)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.dumpprivkey, bitcoinAddress)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.dumpprivkey, bitcoinAddress)["result"].ToString();
         }
-        public string EncryptWallet(string passphrame)
+
+        public String EncryptWallet(String passphrame)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.encryptwallet,passphrame)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.encryptwallet, passphrame)["result"].ToString();
         }
-        public string GetAccountAddress(string account)
+
+        public String GetAccountAddress(String account)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getaccountaddress,account)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getaccountaddress, account)["result"].ToString();
         }
-        public string GetAddressesByAccount(string account)
+
+        public String GetAddressesByAccount(String account)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getaddressesbyaccount,account)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getaddressesbyaccount, account)["result"].ToString();
         }
-        public string GetBlockTemplate()
+
+        public String GetBlockTemplate()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getblocktemplate)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getblocktemplate)["result"].ToString();
         }
-        public int GetconnectionCount()
+
+        public Int32 GetconnectionCount()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getconnectioncount)["result"].ToString();
-            int count = 0;
-            int.TryParse(rawTransaction, out count);
+            String rawTransaction = BaseConnector.RequestServer(MethodName.getconnectioncount)["result"].ToString();
+            Int32 count;
+            Int32.TryParse(rawTransaction, out count);
             return count;
         }
-        public string GetNewAddress(string account)
+
+        public String GetNewAddress(String account)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getnewaddress, account)["result"].ToString();
-            return rawTransaction;
-        }
-        public string GetReceivedByAccount(string account)
-        {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getreceivedbyaccount,account)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getnewaddress, account)["result"].ToString();
         }
 
-        public string GetReceivedByAddress(string bitcoinAddress)
+        public String GetReceivedByAccount(String account)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getreceivedbyaddress, bitcoinAddress)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getreceivedbyaccount, account)["result"].ToString();
+        }
+
+        public String GetReceivedByAddress(String bitcoinAddress)
+        {
+            return BaseConnector.RequestServer(MethodName.getreceivedbyaddress, bitcoinAddress)["result"].ToString();
         }
 
         /// <summary>
@@ -174,90 +161,79 @@ namespace BitcoinWrapper.Wrapper
         /// </summary>
         /// <param name="txid"></param>
         /// <returns></returns>
-        public InwalletTransaction GetTransaction(string txid)
+        public InwalletTransaction GetTransaction(String txid)
         {
-            InwalletTransaction transaction = BaseConnector.RequestServer(MethodName.gettransaction, txid)["result"].ToObject<InwalletTransaction>();
-            return transaction;
+            return BaseConnector.RequestServer(MethodName.gettransaction, txid)["result"].ToObject<InwalletTransaction>();
         }
 
-        public string GetWork()
+        public String GetWork()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getwork)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getwork)["result"].ToString();
         }
 
-        public string Help()
+        public String Help()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.help)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.help)["result"].ToString();
         }
 
-        public string ListAccounts()
+        public String ListAccounts()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listaccounts)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listaccounts)["result"].ToString();
         }
 
-        public string ListAddressGroupings()
+        public String ListAddressGroupings()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listaddressgroupings)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listaddressgroupings)["result"].ToString();
         }
 
-        public string ListReceivedByAccount()
+        public String ListReceivedByAccount()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listreceivedbyaccount)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listreceivedbyaccount)["result"].ToString();
         }
 
-        public string ListReceivedByAddress()
+        public String ListReceivedByAddress()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listreceivedbyaddress)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listreceivedbyaddress)["result"].ToString();
         }
 
-        public string ListSinceBlock()
+        public String ListSinceBlock()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listsinceblock)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listsinceblock)["result"].ToString();
         }
 
-        public string ListTransactions()
+        public String ListTransactions()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listtransactions)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listtransactions)["result"].ToString();
         }
 
-        public string ListLockUnspent()
+        public String ListLockUnspent()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.listlockunspent)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.listlockunspent)["result"].ToString();
         }
 
-        public string SetTxFee(float amount)
+        public String SetTxFee(Decimal amount)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.settxfee,amount)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.settxfee, amount)["result"].ToString();
         }
-        public string WalletLock()
+
+        public String WalletLock()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.walletlock)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.walletlock)["result"].ToString();
         }
-        public string ValidateAddress(string bitcoinAddress)
+
+        public String ValidateAddress(String bitcoinAddress)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.validateaddress,bitcoinAddress)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.validateaddress, bitcoinAddress)["result"].ToString();
         }
-        public string Stop()
+
+        public String Stop()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.stop)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.stop)["result"].ToString();
         }
-        public string SetGenerate(bool variable)
+
+        public String SetGenerate(Boolean variable)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.setgenerate,variable)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.setgenerate, variable)["result"].ToString();
         }
         
         /// <summary>
@@ -266,60 +242,59 @@ namespace BitcoinWrapper.Wrapper
         /// <param name="bitcoinAddress"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public string SendToAddress(string bitcoinAddress, float amount)
+        public String SendToAddress(String bitcoinAddress, Decimal amount)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.sendtoaddress, new List<object>() {bitcoinAddress, amount })["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.sendtoaddress, new List<object> { bitcoinAddress, amount })["result"].ToString();
         }
-        public string SendRawTransaction(string rawTrans)
+
+        public String SendRawTransaction(String rawTrans)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.sendrawtransaction, rawTrans)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.sendrawtransaction, rawTrans)["result"].ToString();
         }
-        public string AddNode(string node, NodeAction action)
+
+        public String AddNode(String node, NodeAction action)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.addnode, new List<object>() { node, action.ToString() })["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.addnode, new List<object> { node, action.ToString() })["result"].ToString();
         }
-        public string GetAddedNodeInfo(string dns)
+
+        public String GetAddedNodeInfo(String dns)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.getaddednodeinfo, dns)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.getaddednodeinfo, dns)["result"].ToString();
         }
-        public string GetTxOut(string txId, int n)
+
+        public String GetTxOut(String txId, Int32 n)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.gettxout, new List<object>() { txId,n})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.gettxout, new List<object> { txId, n })["result"].ToString();
         }
-        public string GetTxOutSetInfo()
+
+        public String GetTxOutSetInfo()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.gettxoutsetinfo)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.gettxoutsetinfo)["result"].ToString();
         }
-        public string KeyPoolRefill()
+
+        public String KeyPoolRefill()
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.keypoolrefill)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.keypoolrefill)["result"].ToString();
         }
-        public string SendFrom(string fromAccount, string toBitcoinAddress, decimal amount)
+
+        public String SendFrom(String fromAccount, String toBitcoinAddress, Decimal amount)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.sendfrom, new List<object>() { fromAccount,toBitcoinAddress,amount})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.sendfrom, new List<object> { fromAccount, toBitcoinAddress, amount })["result"].ToString();
         }
-        public string SignMessage(string bitcoinAddress, string message)
+
+        public String SignMessage(String bitcoinAddress, String message)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.signmessage, new List<object>() { bitcoinAddress,message})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.signmessage, new List<object> { bitcoinAddress, message })["result"].ToString();
         }
-        public string SubmitBlock(string hexData)
+
+        public String SubmitBlock(String hexData)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.submitblock, hexData)["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.submitblock, hexData)["result"].ToString();
         }
-        public string VerifyMessage(string bitcoinAddress, string signature, string message)
+
+        public String VerifyMessage(String bitcoinAddress, String signature, String message)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.verifymessage, new List<object>() { bitcoinAddress,signature,message})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.verifymessage, new List<object> { bitcoinAddress, signature, message })["result"].ToString();
         }
 
         /// <summary>
@@ -328,20 +303,19 @@ namespace BitcoinWrapper.Wrapper
         /// <param name="passphrase">Password you've encrypted the wallet with</param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public string WalletPassphrase(string passphrase, int timeout)
+        public String WalletPassphrase(String passphrase, Int32 timeout)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.walletpassphrase, new List<object>() { passphrase,timeout})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.walletpassphrase, new List<object> { passphrase,timeout })["result"].ToString();
         }
-        public string WalletPassphraseChange(string oldpassphrase, string newpassphrase)
+
+        public String WalletPassphraseChange(String oldPassphrase, String newPassphrase)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.walletpassphrasechange, new List<object>() { oldpassphrase, newpassphrase})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.walletpassphrasechange, new List<object> { oldPassphrase, newPassphrase })["result"].ToString();
         }
-        public string Move(string fromAccount, string toAccount, float amount)
+
+        public String Move(String fromAccount, String toAccount, Decimal amount)
         {
-            var rawTransaction = BaseConnector.RequestServer(MethodName.move, new List<object>() {fromAccount , toAccount, amount})["result"].ToString();
-            return rawTransaction;
+            return BaseConnector.RequestServer(MethodName.move, new List<object> { fromAccount , toAccount, amount })["result"].ToString();
         }
     }
 }
