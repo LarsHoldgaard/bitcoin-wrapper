@@ -2,13 +2,14 @@
 using System.Web.Mvc;
 using BitcoinWrapper.Data;
 using BitcoinWrapper.Wrapper;
+using BitcoinWrapper.Wrapper.Interfaces;
 
 namespace ClientTest.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly BaseBtcConnector _baseBtcConnector;
-        private readonly BitcoinService _bitcoinService;
+        private readonly IBaseBtcConnector _baseBtcConnector;
+        private readonly IBitcoinService _bitcoinService;
 
         //
         // GET: /Home/

@@ -54,6 +54,9 @@
     <Compile Include="Wrapper\BaseConnector.cs" />
     <Compile Include="Wrapper\BaseBtcConnector.cs" />
     <Compile Include="Wrapper\BitcoinService.cs" />
+    <Compile Include="Wrapper\Interfaces\IBaseBtcConnector.cs" />
+    <Compile Include="Wrapper\Interfaces\IBaseConnector.cs" />
+    <Compile Include="Wrapper\Interfaces\IBitcoinService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

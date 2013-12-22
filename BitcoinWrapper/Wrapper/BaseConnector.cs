@@ -6,12 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using BitcoinWrapper.Data;
+using BitcoinWrapper.Wrapper.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace BitcoinWrapper.Wrapper
 {
-    public class BaseConnector
+    public sealed class BaseConnector : IBaseConnector
     {
         private readonly String _serverIp = ConfigurationManager.AppSettings.Get("ServerIp");
         private readonly String _username = ConfigurationManager.AppSettings.Get("Username");

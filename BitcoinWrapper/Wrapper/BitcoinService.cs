@@ -1,14 +1,15 @@
 ﻿using System;
 using BitcoinWrapper.Data;
+using BitcoinWrapper.Wrapper.Interfaces;
 
 namespace BitcoinWrapper.Wrapper
 {
     /// <summary>
     /// This class is a helper class to get useful information
     /// </summary>
-    public class BitcoinService
+    public sealed class BitcoinService : IBitcoinService
     {
-        private readonly BaseBtcConnector _baseBtcConnector;
+        private readonly IBaseBtcConnector _baseBtcConnector;
 
         public BitcoinService()
         {
