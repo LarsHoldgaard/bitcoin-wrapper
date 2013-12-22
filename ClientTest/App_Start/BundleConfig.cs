@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace ClientTest
+namespace WebClient.App_Start
 {
     public class BundleConfig
     {

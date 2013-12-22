@@ -2,13 +2,14 @@
 using System.Web.Mvc;
 using BitcoinWrapper.Data;
 using BitcoinWrapper.Wrapper;
+using BitcoinWrapper.Wrapper.Interfaces;
 
-namespace ClientTest.Controllers
+namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly BaseBtcConnector _baseBtcConnector;
-        private readonly BitcoinService _bitcoinService;
+        private readonly IBaseBtcConnector _baseBtcConnector;
+        private readonly IBitcoinService _bitcoinService;
 
         //
         // GET: /Home/
@@ -39,7 +40,7 @@ namespace ClientTest.Controllers
         [HttpGet]
         public JsonResult GetBlockInfo(String blockhashId)
         {
-            var transaction = _baseBtcConnector.GetBlock(blockhashId);
+            Block transaction = _baseBtcConnector.GetBlock(blockhashId);
             return Json(transaction, JsonRequestBehavior.AllowGet);
         }
     }

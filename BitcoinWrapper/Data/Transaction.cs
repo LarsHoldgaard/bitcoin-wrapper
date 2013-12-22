@@ -15,7 +15,7 @@ namespace BitcoinWrapper.Data
     public class Vout
     {
         public Decimal Value { get; set; }
-        public Int32 n { get; set; }
+        public Int32 N { get; set; }
         public ScriptPubKey ScriptPubKey { get; set; }
     }
 
@@ -27,10 +27,10 @@ namespace BitcoinWrapper.Data
 
     public class ScriptPubKey
     {
-        public String asm { get; set; }
-        public String hex { get; set; }
-        public String reqSigs { get; set; }
-        public String type { get; set; }
-        public List<String> addresses { get; set; }
+        public String Asm { get; set; }
+        public String Hex { get; set; }
+        public String ReqSigs { get; set; }
+        public String Type { get; set; }
+        public List<String> Addresses { get; set; }
     }
 }
