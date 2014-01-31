@@ -212,9 +212,9 @@ namespace BitcoinWrapper.Wrapper
             return _baseConnector.RequestServer(MethodName.listlockunspent)["result"].ToString();
         }
 
-        public String ListUnspent(int min)
+        public String ListUnspent(int min, int max)
         {
-            return _baseConnector.RequestServer(MethodName.listunspent, min)["result"].ToString();
+            return _baseConnector.RequestServer(MethodName.listunspent, min, max)["result"].ToString();
         }
 
         public String SetTxFee(Decimal amount)
