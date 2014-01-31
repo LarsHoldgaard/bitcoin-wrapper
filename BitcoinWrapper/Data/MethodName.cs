@@ -54,6 +54,7 @@
         verifymessage,
         walletpassphrase,
         walletpassphrasechange,
-        move
+        move,
+        listunspent
     }
 }
