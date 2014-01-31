@@ -47,6 +47,7 @@ namespace BitcoinWrapper.Wrapper.Interfaces
         String ListSinceBlock();
         String ListTransactions();
         String ListLockUnspent();
+        String ListUnspent(int min);
         String SetTxFee(Decimal amount);
         String WalletLock();
         String ValidateAddress(String bitcoinAddress);
