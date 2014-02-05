@@ -10,7 +10,7 @@ namespace ConsoleClient
     {
         static void Main()
         {
-            IBaseBtcConnector baseBtcConnector = new BaseBtcConnector();
+            IBaseBtcConnector baseBtcConnector = new BaseBtcConnector(true); // Use Primary Wallet
             Console.Write("Connecting to bitcoin daemon: " + ConfigurationManager.AppSettings["ServerIp"] + "...");
             Double networkDifficulty = baseBtcConnector.GetDifficulty();
             Console.WriteLine("OK\n\nBTC Network Difficulty: " + networkDifficulty.ToString("#,#", CultureInfo.InvariantCulture));

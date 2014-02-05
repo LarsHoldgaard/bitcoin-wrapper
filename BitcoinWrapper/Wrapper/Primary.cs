@@ -12,25 +12,25 @@ using Newtonsoft.Json.Linq;
 
 namespace BitcoinWrapper.Wrapper
 {
-    public sealed class BaseConnector : IBaseConnector
+    public sealed class Primary : IBaseConnector
     {
-        private readonly String _serverIp = ConfigurationManager.AppSettings.Get("ServerIp");
-        private readonly String _username = ConfigurationManager.AppSettings.Get("Username");
-        private readonly String _password = ConfigurationManager.AppSettings.Get("Password");
+        private readonly String _primaryserverIp = ConfigurationManager.AppSettings.Get("PrimaryServerIp");
+        private readonly String _primaryusername = ConfigurationManager.AppSettings.Get("PrimaryUsername");
+        private readonly String _primarypassword = ConfigurationManager.AppSettings.Get("PrimaryPassword");
         
-        public BaseConnector()
+        public Primary()
         {
-            if (String.IsNullOrWhiteSpace(_serverIp))
+            if (String.IsNullOrWhiteSpace(_primaryserverIp))
             {
                 throw new ArgumentException("You have to add a server IP setting with key: ServerIp");
             }
 
-            if (String.IsNullOrWhiteSpace(_username))
+            if (String.IsNullOrWhiteSpace(_primaryusername))
             {
                 throw new ArgumentException("You have to add a bitcoin qt username setting with key: Username");
             }
 
-            if (String.IsNullOrWhiteSpace(_password))
+            if (String.IsNullOrWhiteSpace(_primarypassword))
             {
                 throw new ArgumentException("You have to add a bitcoin qt password setting with key: Password");
             }
@@ -96,7 +96,7 @@ namespace BitcoinWrapper.Wrapper
             {
                 if (webException.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    throw new Exception("Could not connect to bitcoind, please check that bitcoind is up and running and that you configuration (" + _serverIp + ", " + _username + ", " + _password +") is correct");
+                    throw new Exception("Could not connect to bitcoind, please check that bitcoind is up and running and that you configuration (" + _primaryserverIp + ", " + _primaryusername + ", " + _primarypassword +") is correct");
                 }
                 return null;
             }
@@ -111,8 +111,8 @@ namespace BitcoinWrapper.Wrapper
 
         private HttpWebRequest GetRawRequest()
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(_serverIp);
-            webRequest.Credentials = new NetworkCredential(_username, _password);
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(_primaryserverIp);
+            webRequest.Credentials = new NetworkCredential(_primaryusername, _primarypassword);
             webRequest.ContentType = "application/json-rpc";
             webRequest.Method = "POST";
             return webRequest;
