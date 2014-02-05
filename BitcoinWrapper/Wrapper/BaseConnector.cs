@@ -46,6 +46,11 @@ namespace BitcoinWrapper.Wrapper
             return RequestServer(methodName, new List<object> { parameter });
         }
 
+        public JObject RequestServer(MethodName methodName, object parameter, object parameter2)
+        {
+            return RequestServer(methodName, new List<object> { parameter, parameter2 });
+        }
+
         public JObject RequestServer(MethodName methodName, List<object> parameters)
         {
             HttpWebRequest rawRequest = GetRawRequest();
@@ -66,6 +71,7 @@ namespace BitcoinWrapper.Wrapper
                 foreach (object parameter in parameters)
                 {
                     props.Add(parameter);
+                    
                 }
             }
 
