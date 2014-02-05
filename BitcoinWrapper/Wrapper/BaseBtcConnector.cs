@@ -17,9 +17,16 @@ namespace BitcoinWrapper.Wrapper
         /// <summary>
         /// Starts connecting to the Bitcoin-qt server
         /// </summary>
-        public BaseBtcConnector()
+        public BaseBtcConnector(bool isPrimary)
         {
-            _baseConnector = new BaseConnector();
+            if (isPrimary)
+            {
+                _baseConnector = new Primary();
+            }
+            else
+            {
+                _baseConnector = new Secondary();
+            }
         }
         
         public Decimal GetBalance()
