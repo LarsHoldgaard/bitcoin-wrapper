@@ -12,25 +12,29 @@ using Newtonsoft.Json.Linq;
 
 namespace BitcoinWrapper.Wrapper
 {
-    public sealed class Primary : IBaseConnector
+    public sealed class BaseConnector : IBaseConnector
     {
-        private readonly String _primaryserverIp = ConfigurationManager.AppSettings.Get("PrimaryServerIp");
-        private readonly String _primaryusername = ConfigurationManager.AppSettings.Get("PrimaryUsername");
-        private readonly String _primarypassword = ConfigurationManager.AppSettings.Get("PrimaryPassword");
+        string _serverIp = "blank";
+        string _username = "blank";
+        string _password = "blank";
+        public string serverIp { get { return _serverIp; } set { _serverIp = value; } }
+        public string username { get { return _username; } set { _username = value; } }
+        public string password { get { return _password; } set { _password = value; } }
         
-        public Primary()
-        {
-            if (String.IsNullOrWhiteSpace(_primaryserverIp))
-            {
-                throw new ArgumentException("You have to add a server IP setting with key: ServerIp");
-            }
 
-            if (String.IsNullOrWhiteSpace(_primaryusername))
+        public BaseConnector()
+        {
+            //if (String.IsNullOrWhiteSpace(_serverIp))
+            //{
+            //    throw new ArgumentException("You have to add a server IP setting with key: ServerIp");
+            //}
+
+            if (String.IsNullOrWhiteSpace(_username))
             {
                 throw new ArgumentException("You have to add a bitcoin qt username setting with key: Username");
             }
 
-            if (String.IsNullOrWhiteSpace(_primarypassword))
+            if (String.IsNullOrWhiteSpace(_password))
             {
                 throw new ArgumentException("You have to add a bitcoin qt password setting with key: Password");
             }
@@ -71,7 +75,7 @@ namespace BitcoinWrapper.Wrapper
                 foreach (object parameter in parameters)
                 {
                     props.Add(parameter);
-                    
+
                 }
             }
 
@@ -87,7 +91,7 @@ namespace BitcoinWrapper.Wrapper
                 Stream dataStream = rawRequest.GetRequestStream();
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 dataStream.Close();
-                
+
                 WebResponse webResponse = rawRequest.GetResponse();
                 streamReader = new StreamReader(webResponse.GetResponseStream(), true);
                 return (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd());
@@ -96,7 +100,7 @@ namespace BitcoinWrapper.Wrapper
             {
                 if (webException.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    throw new Exception("Could not connect to bitcoind, please check that bitcoind is up and running and that you configuration (" + _primaryserverIp + ", " + _primaryusername + ", " + _primarypassword +") is correct");
+                    throw new Exception("Could not connect to bitcoind, please check that bitcoind is up and running and that you configuration (" + _serverIp + ", " + _username + ", " + _password + ") is correct");
                 }
                 return null;
             }
@@ -111,8 +115,8 @@ namespace BitcoinWrapper.Wrapper
 
         private HttpWebRequest GetRawRequest()
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(_primaryserverIp);
-            webRequest.Credentials = new NetworkCredential(_primaryusername, _primarypassword);
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(_serverIp);
+            webRequest.Credentials = new NetworkCredential(_username, _password);
             webRequest.ContentType = "application/json-rpc";
             webRequest.Method = "POST";
             return webRequest;

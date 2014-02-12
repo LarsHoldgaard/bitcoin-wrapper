@@ -11,9 +11,9 @@ namespace BitcoinWrapper.Wrapper
     {
         private readonly IBaseBtcConnector _baseBtcConnector;
 
-        public BitcoinService(bool isPrimary)
+        public BitcoinService(string ip, string username, string password)
         {
-            _baseBtcConnector = new BaseBtcConnector(isPrimary);    
+            _baseBtcConnector = new BaseBtcConnector(ip, username, password);
         }
 
         public Transaction GetTransaction(String txId)
