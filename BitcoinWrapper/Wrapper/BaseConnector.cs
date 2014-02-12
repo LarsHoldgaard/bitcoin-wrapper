@@ -24,19 +24,19 @@ namespace BitcoinWrapper.Wrapper
 
         public BaseConnector()
         {
-            //if (String.IsNullOrWhiteSpace(_serverIp))
-            //{
-            //    throw new ArgumentException("You have to add a server IP setting with key: ServerIp");
-            //}
+            if (String.IsNullOrWhiteSpace(_serverIp))
+            {
+                throw new ArgumentException("You have not declared the ServerIp");
+            }
 
             if (String.IsNullOrWhiteSpace(_username))
             {
-                throw new ArgumentException("You have to add a bitcoin qt username setting with key: Username");
+                throw new ArgumentException("You have not declared the Username");
             }
 
             if (String.IsNullOrWhiteSpace(_password))
             {
-                throw new ArgumentException("You have to add a bitcoin qt password setting with key: Password");
+                throw new ArgumentException("You have not declared the Password");
             }
         }
 
