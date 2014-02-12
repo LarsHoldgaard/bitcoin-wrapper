@@ -15,8 +15,8 @@ namespace WebClient.Controllers
         // GET: /Home/
         public HomeController()
         {
-            _baseBtcConnector =  new BaseBtcConnector();
-            _bitcoinService = new BitcoinService();
+            _baseBtcConnector =  new BaseBtcConnector(true);
+            _bitcoinService = new BitcoinService(true);
         }
 
         public ActionResult Index()
